@@ -1,0 +1,14 @@
+
+
+
+bin/*
+obj/*
+FormationsTool/bin/*
+FormationsTool/obj/*
+packages/
+.vs/
+.idea/
+
+#ignore signed keys; a google search showed including this in the repo is a bad idea
+*.snk
+

@@ -1,0 +1,33 @@
+﻿<UserControl x:Name="userControl" x:Class="FormationsTool.FVectorEditorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FormationsTool"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="200"
+             Height="30" MinWidth="200">
+    <Grid Margin="0,5,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="200*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Name="IndexTextBox" Text="0" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Center" />
+        <Grid VerticalAlignment="Center" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="X" HorizontalAlignment="Center" Grid.Column="0" Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBox Name="XTextBox" Width="Auto" HorizontalAlignment="Stretch" MinWidth="50" Grid.Column="1" Text="{Binding Path=X, Mode=TwoWay, StringFormat=\{0:F\}, UpdateSourceTrigger=LostFocus}" />
+            <TextBlock Text="Y" HorizontalAlignment="Center" Grid.Column="2" Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBox Name="YTextBox" Width="Auto" HorizontalAlignment="Stretch" MinWidth="50" Grid.Column="3" Text="{Binding Path=Y, Mode=TwoWay, StringFormat=\{0:F\}, UpdateSourceTrigger=LostFocus}" />
+            <TextBlock Text="Z" HorizontalAlignment="Center" Grid.Column="4" Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBox Name="ZTextBox" Width="Auto" HorizontalAlignment="Stretch" MinWidth="50" Grid.Column="5" Text="{Binding Path=Z, Mode=TwoWay, StringFormat=\{0:F\}, UpdateSourceTrigger=LostFocus}"/>
+        </Grid>
+    </Grid>
+</UserControl>
