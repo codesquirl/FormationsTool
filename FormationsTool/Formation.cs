@@ -89,6 +89,15 @@ namespace FormationsTool
             if (PositionChanged != null) PositionChanged(this, new PositionChangedEventArgs(index, (FVector)sender));
         }
 
+        public void RebindChangeEvents()
+        {
+            foreach (FVector position in Positions)
+            {
+                position.PropertyChanged -= VectorPropertyChanged;
+                position.PropertyChanged += VectorPropertyChanged;
+            }
+        }
+
         public string ToJson()
         {
             return JsonSerializer.Serialize(this);

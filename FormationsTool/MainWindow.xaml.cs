@@ -107,7 +107,7 @@ namespace FormationsTool
             FormationsListBox.Items.Clear();
             AddFormation(Formation.Create(8));
             FormationsListBox.SelectedItem = CurrentFormationFile.Formations[0];
-            IsSaved = false;
+            IsSaved = true;
         }
 
         public void SaveFile()
@@ -148,9 +148,11 @@ namespace FormationsTool
 
                 foreach (Formation formation in formations)
                 {
+                    formation.RebindChangeEvents();
                     AddFormation(formation);
-                    FormationsListBox.SelectedItem = CurrentFormationFile.Formations[0];
                 }
+                FormationsListBox.SelectedItem = CurrentFormationFile.Formations[0];
+                SetFormationDataContext(CurrentFormationFile.Formations[0]);
             }
         }
 
@@ -183,6 +185,7 @@ namespace FormationsTool
 
         private void Formation_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            IsSaved = false;
         }
 
         private void FormationsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
