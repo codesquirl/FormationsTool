@@ -186,6 +186,20 @@ namespace FormationsTool
         private void Formation_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             IsSaved = false;
+            if (e.PropertyName == "IsDefault")
+            {
+                // Only allow one formation to be the default.
+                if (PropertiesPanel.Formation.IsDefault)
+                {
+                    foreach (Formation formation in CurrentFormationFile.Formations)
+                    {
+                        if (formation != PropertiesPanel.Formation)
+                        {
+                            formation.SetDefault(false);
+                        }
+                    }
+                }
+            }
         }
 
         private void FormationsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

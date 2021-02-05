@@ -38,7 +38,6 @@ namespace FormationsTool
         public int GridSize { get; set; } = 25;
         public double InitialZoom { get; set; } = 1600.0;
 
-
         public double ZoomSensitivity { get; set; } = 1.0;
 
         public double MarkerSize

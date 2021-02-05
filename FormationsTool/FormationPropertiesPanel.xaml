@@ -13,10 +13,14 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6" />
                     <ColumnDefinition Width="94"/>
-                    <ColumnDefinition Width="300*" />
+                    <ColumnDefinition Width="200*" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="20" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Formation Name" Grid.Column="0" Grid.ColumnSpan="2" />
                 <TextBox Name="NameTextBox" Grid.Column="2" Text="{Binding Path=Name, Mode=TwoWay}" />
+                <TextBlock Text="Default" Grid.Column="3" Grid.ColumnSpan="2" Margin="8,0" />
+                <CheckBox Name="IsDefaultCheckbox" Grid.Column="4" IsChecked="{Binding Path=IsDefault, Mode=TwoWay}" VerticalAlignment="Center" />
             </Grid>
             <GroupBox Name="PositionGrid" Header="Positions" Margin="0,5">
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
