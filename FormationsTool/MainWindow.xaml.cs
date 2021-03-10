@@ -112,8 +112,15 @@ namespace FormationsTool
 
         public void SaveFile()
         {
-            File.WriteAllText(FormationFilePath, CurrentFormationFile.ToJson());
-            IsSaved = true;
+            try
+            {
+                File.WriteAllText(FormationFilePath, CurrentFormationFile.ToJson());
+                IsSaved = true;
+            }
+            catch (Exception ex)
+            {
+                AdonisUI.Controls.MessageBox.Show("Error saving formation file: " + ex.Message);
+            }
         }
 
         public void SaveFileAs()

@@ -34,9 +34,12 @@ namespace FormationsTool
         private Point3D CameraPosition;
         private double markerSize = 60.0;
 
+        private double MinZoom = 1000.0;
+        private double MaxZoom = 5000.0;
+
         public bool SnapToGrid { get; set; } = false;
         public int GridSize { get; set; } = 25;
-        public double InitialZoom { get; set; } = 1600.0;
+        public double InitialZoom { get; set; } = 2000.0;
 
         public double ZoomSensitivity { get; set; } = 1.0;
 
@@ -105,8 +108,13 @@ namespace FormationsTool
             AddLights();
             DefineMarkers(Formation?.Positions?.Count ?? 8);
             AddMarkers();
-            CameraPosition = new Point3D(0, 0, InitialZoom);
-            CoordsLabel.Text = $"{CameraPosition.X},{CameraPosition.Y},{CameraPosition.Z}";
+            SetCameraPosition(new Point3D(0, 0, InitialZoom));
+        }
+
+        void SetCameraPosition(Point3D newPoint)
+        {
+            CameraPosition = newPoint;
+            CoordsLabel.Text = $"{CameraPosition.X}, {CameraPosition.Y}, {CameraPosition.Z}";
             Camera.Position = CameraPosition;
         }
 
@@ -175,9 +183,9 @@ namespace FormationsTool
             double floorHeight = 0.0;
             MeshGeometry3D floorMesh = new MeshGeometry3D();
             floorMesh.AddRectangle(
-                new Point3D(-1000, -1000, floorHeight),
-                new Vector3D(2000, 0, 0),
-                new Vector3D(0, 2000, 0),
+                new Point3D(-2000, -2000, floorHeight),
+                new Vector3D(4000, 0, 0),
+                new Vector3D(0, 4000, 0),
                 true
             );
             Floor = floorMesh.MakeModel(Color.FromArgb(255, 64, 64, 64));
@@ -208,11 +216,10 @@ namespace FormationsTool
 
         private void DockPanel_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            // Clamp Camera between 800 -> 3000
-            CameraPosition.Z = Math.Min(CameraPosition.Z - (ZoomSensitivity * e.Delta), 3000);
-            CameraPosition.Z = Math.Max(CameraPosition.Z, 800);
-            CoordsLabel.Text = $"{CameraPosition.X},{CameraPosition.Y},{CameraPosition.Z}";
-            Camera.Position = CameraPosition;
+            // Clamp Camera between MinZoom and MaxZoom
+            CameraPosition.Z = Math.Min(CameraPosition.Z - (ZoomSensitivity * e.Delta), MaxZoom);
+            CameraPosition.Z = Math.Max(CameraPosition.Z, MinZoom);
+            SetCameraPosition(CameraPosition);
         }
 
         private void Viewport_MouseDown(object sender, MouseButtonEventArgs e)
@@ -266,8 +273,7 @@ namespace FormationsTool
             if (DraggingCamera) {
                 var newPoint = e.GetPosition(Viewport);
                 CameraPosition.Offset((newPoint.X - DragStartPoint.X) * -2, (newPoint.Y - DragStartPoint.Y) * 2, 0);
-                Camera.Position = CameraPosition;
-                CoordsLabel.Text = $"{CameraPosition.X},{CameraPosition.Y},{CameraPosition.Z}";
+                SetCameraPosition(CameraPosition);
                 DragStartPoint = newPoint;
             }
             else
