@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="Formation" Height="150" Width="300"
         SizeToContent="WidthAndHeight" ShowInTaskbar="False" ResizeMode="NoResize"
-        Topmost="True" WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner">
     <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="4,4">
             <Label>Formation Size</Label>

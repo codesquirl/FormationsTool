@@ -45,6 +45,7 @@ namespace FormationsTool
             if (!IsSaved)
             {
                 ConfirmationDialog c = new ConfirmationDialog("You have unsaved changes. Are you sure you want to exit?");
+                c.Owner = this;
                 if (!c.ShowDialog() ?? false)
                 {
                     return;
@@ -58,6 +59,7 @@ namespace FormationsTool
             if (!IsSaved)
             {
                 ConfirmationDialog c = new ConfirmationDialog("You have unsaved changes. Discard changes?");
+                c.Owner = this;
                 if (!c.ShowDialog() ?? false)
                 {
                     return;
@@ -71,6 +73,7 @@ namespace FormationsTool
             if (!IsSaved)
             {
                 ConfirmationDialog c = new ConfirmationDialog("You have unsaved changes. Discard changes?");
+                c.Owner = this;
                 if (!c.ShowDialog() ?? false)
                 {
                     return;
@@ -168,6 +171,7 @@ namespace FormationsTool
         public void NewFormation()
         {
             FormationDialog dlg = new FormationDialog();
+            dlg.Owner = this;
             if (dlg.ShowDialog() ?? false)
             {
                 Formation formation = Formation.Create(dlg.FormationSize);
@@ -233,6 +237,7 @@ namespace FormationsTool
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             ConfirmationDialog dlg = new ConfirmationDialog("Are you sure you want to remove this formation?");
+            dlg.Owner = this;
             if (dlg.ShowDialog() ?? false)
             {
                 Formation formation = FormationsListBox.SelectedItem as Formation;
@@ -247,6 +252,13 @@ namespace FormationsTool
                     IsSaved = false;
                 }
             }
+        }
+
+        private void AboutMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutDialog dlg = new AboutDialog();
+            dlg.Owner = this;
+            dlg.ShowDialog();
         }
     }
 }

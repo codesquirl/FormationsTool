@@ -23,7 +23,7 @@
             <ColumnDefinition Width="300*"/>
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center">
-            <MenuItem Header="File">
+            <MenuItem Header="_File">
                 <MenuItem Name="NewMenuItem" Header="_New File..." Click="NewMenuItem_Click" />
                 <MenuItem Name="LoadMenuItem" Header="_Load File..." Click="LoadMenuItem_Click" />
                 <Separator/>
@@ -31,6 +31,9 @@
                 <MenuItem Name="SaveAsMenuItem" Header="Save _As..." Click="SaveAsMenuItem_Click" />
                 <Separator/>
                 <MenuItem Header="E_xit" Click="MenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Name="AboutMenuItem" Header="_About" Click="AboutMenuItem_OnClick" />
             </MenuItem>
         </Menu>
         <local:FormationCanvas x:Name="FormationCanvas" Margin="0,0,0,0" Grid.Column="0" Grid.Row="1" />
