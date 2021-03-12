@@ -146,7 +146,7 @@ namespace FormationsTool
                 List<Formation> formations = null;
                 try
                 {
-                    formations = JsonSerializer.Deserialize<List<Formation>>(File.ReadAllText(filePath));
+                    formations = JsonSerializer.Deserialize<List<Formation>>(File.ReadAllText(filePath), new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
                 }
                 catch (Exception ex)
                 {
