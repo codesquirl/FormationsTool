@@ -195,6 +195,7 @@
     <Compile Include="Mesh\Edge.cs" />
     <Compile Include="Mesh\MeshExtensions.cs" />
     <Compile Include="Mesh\SolidsExtensions.cs" />
+    <Compile Include="Mesh\TextHelper.cs" />
     <Compile Include="Mesh\TransformExtensions.cs" />
     <Compile Include="Mesh\Triangle.cs" />
     <Compile Include="Mesh\VectorExtensions.cs" />

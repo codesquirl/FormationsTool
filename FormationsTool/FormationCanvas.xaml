@@ -33,7 +33,7 @@
         <Viewport3D Name="Viewport"  MouseWheel="DockPanel_MouseWheel" MouseDown="Viewport_MouseDown" MouseUp="Viewport_MouseUp" MouseMove="Viewport_MouseMove" MouseLeave="Viewport_MouseLeave">
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="Camera" Position="0,0,500" LookDirection="0,0,-1000" UpDirection="0,1,0"
-                                    NearPlaneDistance="0" FarPlaneDistance="5000"  />
+                                   NearPlaneDistance="0" FarPlaneDistance="5000"  />
             </Viewport3D.Camera>
         </Viewport3D>
     </DockPanel>

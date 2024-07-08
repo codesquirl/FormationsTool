@@ -27,6 +27,7 @@ namespace FormationsTool
         private Formation formation;
         private GeometryModel3D Floor = null;
         private List<GeometryModel3D> Markers { get; set; } = new List<GeometryModel3D>();
+        private List<GeometryModel3D> MarkerLabels { get; set; } = new List<GeometryModel3D>();
         private List<Light> Lights = new List<Light>();
         private Model3DGroup MainModelGroup = new Model3DGroup();
         private MeshGeometry3D MarkerMesh;
@@ -135,26 +136,48 @@ namespace FormationsTool
         private void UpdateMarker(int i, FVector vector)
         {
             Markers[i].Transform = new TranslateTransform3D(vector.X, vector.Y, vector.Z);
+            MarkerLabels[i].Transform = new TranslateTransform3D(vector.X, vector.Y, vector.Z + 61);
         }
 
         private void DefineMarkers(int numMarkers)
         {
             if (numMarkers < 1) return;
+            
             MarkerMesh = new MeshGeometry3D();
             MarkerMesh.AddGeodesicSphere(2, MarkerSize, new TranslateTransform3D(0, 0, 0));
-
+                
             Markers.Clear();
+            MarkerLabels.Clear();
+
+            var brush = new SolidColorBrush(Colors.White);
+            
             Markers.Add(MarkerMesh.MakeModel(App.PlayerColor));
-            for (int i = 1; i < numMarkers; i++)
+            MarkerLabels.Add(TextHelper.CreateTextLabel3D("0", brush, 28));
+            for (var i = 1; i < numMarkers; i++)
             {
+                var textBlock = new TextBlock(new Run(i.ToString()))
+                {
+                    Foreground = brush,
+                    Background = new SolidColorBrush(App.PositionColors[(i - 1) % App.PositionColors.Count]),
+                    FontFamily = new FontFamily("Ariel")
+                };
+
+                var material = new DiffuseMaterial
+                {
+                    Brush = new VisualBrush(textBlock),
+                    Color = App.PositionColors[(i - 1) % App.PositionColors.Count]
+                };
+
                 Markers.Add(MarkerMesh.MakeModel(App.PositionColors[(i-1) % App.PositionColors.Count]));
+                MarkerLabels.Add(TextHelper.CreateTextLabel3D(i.ToString(), brush, 28));
             }
         }
         private void AddMarkers()
         {
-            foreach (var marker in Markers)
+            for (var i = 0; i < Markers.Count; i++)
             {
-                MainModelGroup.Children.Add(marker);
+                MainModelGroup.Children.Add(Markers[i]);
+                MainModelGroup.Children.Add(MarkerLabels[i]);
             }
         }
 
@@ -226,24 +249,24 @@ namespace FormationsTool
         {
             if (e.ChangedButton == MouseButton.Left && !DraggingCamera)
             {
-                RayMeshGeometry3DHitTestResult rayMeshResult =
-                    VisualTreeHelper.HitTest(Viewport, e.GetPosition(Viewport)) as RayMeshGeometry3DHitTestResult;
-                if (rayMeshResult != null)
-                {
-                    for (int i = 1; i < Markers.Count; i++)
-                    {
-                        if (Markers[i] == rayMeshResult.ModelHit)
-                        {
-                            SelectedMarkerIndex = i;
-                            SelectedMarker = Markers[i];
-                            DraggingMarker = true;
-                            DragStartPoint = e.GetPosition(Viewport);
-                            e.Handled = true;
-                            return;
-                        }
-                    }
-                }
                 SelectedMarker = null;
+                VisualTreeHelper.HitTest(Viewport, null, result =>
+                {
+                    if (!(result is RayMeshGeometry3DHitTestResult rayMeshResult))
+                        return HitTestResultBehavior.Continue;
+                    
+                    var i = Markers.IndexOf(rayMeshResult.ModelHit as GeometryModel3D);
+                    if (i <= 0) return HitTestResultBehavior.Continue;
+                    
+                    SelectedMarkerIndex = i;
+                    SelectedMarker = Markers[i];
+                    DraggingMarker = true;
+                    DragStartPoint = e.GetPosition(Viewport);
+                    e.Handled = true;
+                    return HitTestResultBehavior.Stop;
+
+                }, new PointHitTestParameters(e.GetPosition(Viewport)));
+
             }
             else if (e.ChangedButton == MouseButton.Right && !DraggingMarker)
             {
